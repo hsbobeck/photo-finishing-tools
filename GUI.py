@@ -13,6 +13,7 @@ class GUI:
         # Start tk with title
         self.app = TkinterDnD.Tk()
         self.app.title("Henry's Photo Finishing Tools")
+        self.app.geometry("500x300")
 
         # Create a listbox to display the dropped files
         self.listbox = tk.Listbox(self.app, selectmode=tk.MULTIPLE)
@@ -36,13 +37,17 @@ class GUI:
 
         self.app.mainloop()
 
+    # adds files to the listbox given the drag and drop event
+    # event.data is a single string of the filenames contained in the drag
     def add_files(self, event):
         # Get the list of files from the event
         if event.data[0] == "{":
+            # when there is a space in the directory, it contains the filenames by {}
             files = re.split("{([^{]*?)}", event.data)
         else:
+            # when there is no space in the directory, it separates filenames by only a space
             files = re.split(" ", event.data)
-        # remove empty strings from list and remove whitespace on ends
+        # remove whitespace on ends of filenames and remove empty strings from list
         files = [s.strip() for s in files if s]
         files = [s for s in files if s]
         # Add the files to the listbox
