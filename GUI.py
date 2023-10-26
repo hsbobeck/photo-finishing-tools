@@ -51,9 +51,10 @@ class GUI:
         for file in self.listbox.get(0, tk.END):
             abspath = os.path.abspath(file)
             dir = os.path.dirname(abspath) + "/"
-            name = os.path.basename(abspath).split(".")[0]
-            ext = os.path.splitext(abspath)[1]
-            # print(f"dir: {dir}\nname: {name}\next: {ext}")
+            # name = os.path.basename(abspath).split(".")[0]
+            ext = os.path.splitext(abspath)[-1]
+            name = os.path.basename(abspath)[0 : -len(ext)]
+            print(f"dir: {dir}\nname: {name}\next: {ext}")
             borders.add_white_border(file, dir + name + "_border" + ext)
 
     def clear_listbox(self):
