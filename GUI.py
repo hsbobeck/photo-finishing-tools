@@ -38,7 +38,10 @@ class GUI:
 
     def add_files(self, event):
         # Get the list of files from the event
-        files = re.split("{([^{]*?)}", event.data)
+        if event.data[0] == "{":
+            files = re.split("{([^{]*?)}", event.data)
+        else:
+            files = re.split(" ", event.data)
         # remove empty strings from list and remove whitespace on ends
         files = [s.strip() for s in files if s]
         files = [s for s in files if s]
@@ -47,11 +50,10 @@ class GUI:
             self.listbox.insert(tk.END, file)
 
     def export_with_borders(self):
-        # Iterate through the list of files and add borders
+        # Iterate through the list of files and export new bordered versions in original folder
         for file in self.listbox.get(0, tk.END):
             abspath = os.path.abspath(file)
             dir = os.path.dirname(abspath) + "/"
-            # name = os.path.basename(abspath).split(".")[0]
             ext = os.path.splitext(abspath)[-1]
             name = os.path.basename(abspath)[0 : -len(ext)]
             print(f"dir: {dir}\nname: {name}\next: {ext}")
