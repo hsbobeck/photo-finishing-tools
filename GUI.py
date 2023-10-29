@@ -15,7 +15,7 @@ class GUI:
         self.app.title("Henry's Photo Finishing Tools")
         self.app.geometry("500x300")
 
-        self.version_label = tk.Label(self.app, text="v0.1.1")
+        self.version_label = tk.Label(self.app, text="v0.1.2")
         self.version_label.pack()
 
         # Create a label for instructions
@@ -62,6 +62,7 @@ class GUI:
             self.listbox.insert(tk.END, file)
 
         # remove instruction label
+        self.version_label.pack_forget()
         self.instruction_label.pack_forget()
 
     def export_with_borders(self):
