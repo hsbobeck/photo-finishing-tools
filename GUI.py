@@ -15,6 +15,10 @@ class GUI:
         self.app.title("Henry's Photo Finishing Tools")
         self.app.geometry("500x300")
 
+        # Create a label for instructions
+        self.instruction_label = tk.Label(self.app, text="Drag and drop files here")
+        self.instruction_label.pack()
+
         # Create a listbox to display the dropped files
         self.listbox = tk.Listbox(self.app, selectmode=tk.MULTIPLE)
         self.listbox.pack(fill=tk.BOTH, expand=True)
@@ -54,6 +58,9 @@ class GUI:
         for file in files:
             self.listbox.insert(tk.END, file)
 
+        # remove instruction label
+        self.instruction_label.pack_forget()
+
     def export_with_borders(self):
         # Iterate through the list of files and export new bordered versions in original folder
         for file in self.listbox.get(0, tk.END):
@@ -65,6 +72,7 @@ class GUI:
             borders.add_white_border(file, dir + name + "_border" + ext)
 
     def clear_listbox(self):
+        # clear all files in listbox
         self.listbox.delete(0, tk.END)
 
 
