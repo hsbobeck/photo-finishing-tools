@@ -15,6 +15,9 @@ class GUI:
         self.app.title("Henry's Photo Finishing Tools")
         self.app.geometry("500x300")
 
+        self.version_label = tk.Label(self.app, text="v0.1.1")
+        self.version_label.pack()
+
         # Create a label for instructions
         self.instruction_label = tk.Label(self.app, text="Drag and drop files here")
         self.instruction_label.pack()
