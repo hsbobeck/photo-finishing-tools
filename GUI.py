@@ -1,8 +1,10 @@
 import tkinter as tk
 from tkinterdnd2 import DND_FILES, TkinterDnD
 import borders
+import grain
 import re
 import os
+from PIL import Image
 
 
 class GUI:
@@ -27,10 +29,16 @@ class GUI:
         self.listbox.pack(fill=tk.BOTH, expand=True)
 
         # Create a button to trigger the export action
-        self.export_button = tk.Button(
+        self.export_with_borders_button = tk.Button(
             self.app, text="Export All with Borders", command=self.export_with_borders
         )
-        self.export_button.pack()
+        self.export_with_borders_button.pack()
+
+        # Create a button to trigger the export action
+        self.export_with_grain_button = tk.Button(
+            self.app, text="Export All with Grain", command=self.export_with_grain
+        )
+        self.export_with_grain_button.pack()
 
         # Create a button to clear the listbox
         self.clear_button = tk.Button(
@@ -66,7 +74,7 @@ class GUI:
         self.instruction_label.pack_forget()
 
     def export_with_borders(self):
-        # Iterate through the list of files and export new bordered versions in original folder
+        # Iterate through the list of files and export new versions in original folder
         for file in self.listbox.get(0, tk.END):
             abspath = os.path.abspath(file)
             dir = os.path.dirname(abspath) + "/"
@@ -74,6 +82,19 @@ class GUI:
             name = os.path.basename(abspath)[0 : -len(ext)]
             print(f"dir: {dir}\nname: {name}\next: {ext}")
             borders.add_white_border(file, dir + name + "_border" + ext)
+
+    def export_with_grain(self):
+        # Iterate through the list of files and export new versions in original folder
+        for file in self.listbox.get(0, tk.END):
+            abspath = os.path.abspath(file)
+            dir = os.path.dirname(abspath) + "/"
+            ext = os.path.splitext(abspath)[-1]
+            name = os.path.basename(abspath)[0 : -len(ext)]
+            print(f"dir: {dir}\nname: {name}\next: {ext}")
+            input_image = Image.open(file)
+            output_image = grain.add_grain(input_image, "A", strength=1.0, scale=3)
+            # Save the resulting image
+            output_image.save(dir + name + "_grain" + ext)
 
     def clear_listbox(self):
         # clear all files in listbox
